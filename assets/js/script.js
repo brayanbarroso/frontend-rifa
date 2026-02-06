@@ -1,5 +1,8 @@
 // Configuración de la API
-const API_URL = "http://localhost:3000/api";
+//const API_URL = "http://localhost:3000/api";
+
+//Api en producción, cambiar a la URL del servidor real cuando se despliegue
+const API_URL = "https://backend-rifa-mu.vercel.app/api";
 
 // Estado global
 let numbers = [];
