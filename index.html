@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rifa Digital - 100 Números</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header-content">
+          <h1 class="title">RIFA <span class="highlight">2026</span></h1>
+          <div class="stats">
+            <div class="stat-item">
+              <span class="stat-number" id="disponibles">100</span>
+              <span class="stat-label">Disponibles</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="vendidos">0</span>
+              <span class="stat-label">Vendidos</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <div class="grid-container" id="numbersGrid">
+          <!-- Los números se generarán dinámicamente con JavaScript -->
+        </div>
+      </main>
+
+      <!-- Modal para el formulario -->
+      <div class="modal" id="modal">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content">
+          <button class="close-btn" onclick="closeModal()">&times;</button>
+          <div class="modal-header">
+            <h2>
+              Número <span id="selectedNumber" class="selected-number">00</span>
+            </h2>
+            <p>Completa tus datos para reservar este número</p>
+          </div>
+          <form id="purchaseForm" class="purchase-form">
+            <div class="form-group">
+              <label for="documento">Número de Documento *</label>
+              <input
+                type="text"
+                id="documento"
+                name="documento"
+                placeholder="Ej: 1072528533"
+                inputmode="numeric"
+                maxlength="10"
+                required
+              />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nombres">Nombres *</label>
+                <input
+                  type="text"
+                  id="nombres"
+                  name="nombres"
+                  placeholder="Ej: Juan Carlos"
+                  inputmode="text"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="apellidos">Apellidos *</label>
+                <input
+                  type="text"
+                  id="apellidos"
+                  name="apellidos"
+                  placeholder="Ej: García López"
+                  inputmode="text"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="telefono">Teléfono *</label>
+                <input
+                  type="tel"
+                  id="telefono"
+                  name="telefono"
+                  placeholder="Ej: 3009998877"
+                  maxlength="10"
+                  inputmode="tel"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Correo Electrónico *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Ej: ejemplo@correo.com"
+                  inputmode="email"
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit" class="submit-btn">Confirmar Compra</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Toast para notificaciones -->
+      <div class="toast" id="toast"></div>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
