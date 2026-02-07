@@ -1,6 +1,6 @@
 // Configuración de la API
 //const API_BASE = "http://localhost:3000"; //Api para desarrollo local
-const API_BASE = "https://backend-rifa-mu.vercel.app"; //Api para desarrollo producción, cambiar a la URL del servidor real cuando se despliegue
+const API_BASE = "https://backend-rifa-mu.vercel.app/api"; //Api para desarrollo producción, cambiar a la URL del servidor real cuando se despliegue
 
 // ==================== PROTECCIÓN DE RUTA ====================
 // Verificar autenticación antes de cargar la página
