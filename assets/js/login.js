@@ -1,4 +1,4 @@
-const API_BASE = "https://backend-rifa-mu.vercel.app/"; //Api para desarrollo producción, cambiar a la URL del servidor real cuando se despliegue
+const API_BASE = "https://backend-rifa-mu.vercel.app"; //Api para desarrollo producción, cambiar a la URL del servidor real cuando se despliegue
 //const API_BASE = "http://localhost:3000"; //Api para desarrollo local
 
 async function loginRequest(username, password) {
