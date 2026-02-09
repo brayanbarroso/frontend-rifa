@@ -1,4 +1,3 @@
-// Componente de navegación global
 function loadNavbar() {
   const navbarHTML = `
     <nav class="navbar">
@@ -8,8 +7,8 @@ function loadNavbar() {
         </div>
         <ul class="nav-links">
           <li><a href="/" class="nav-link" data-page="inicio">Inicio</a></li>
-          <li><a href="/compradores" class="nav-link" data-page="buyers">Compradores</a></li>
-          <li><a href="/admin" class="nav-link" data-page="manager">Administración</a></li>
+          <li><a href="/pages/buyers.html" class="nav-link" data-page="buyers">Compradores</a></li>
+          <li><a href="/pages/manager.html" class="nav-link" data-page="manager">Administración</a></li>
           <li class="nav-user">
             <span class="user-info" id="userInfo">Usuario</span>
             <a href="#" class="nav-link logout-btn" id="logoutBtn">Cerrar Sesión</a>
@@ -90,7 +89,7 @@ function handleLogout(e) {
   if (confirm("¿Deseas cerrar sesión?")) {
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
-    window.location.href = "/login";
+    window.location.href = "../login/login.html";
   }
 }
 

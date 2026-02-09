@@ -59,7 +59,7 @@ async function handleLoginSubmit(event) {
     }
     showFormMessage(form, "Inicio de sesión exitoso. Redirigiendo...", false);
     setTimeout(() => {
-      window.location.href = resp?.redirect || "/compradores";
+      window.location.href = resp?.redirect || "../pages/buyers.html";
     }, 700);
   } catch (err) {
     const msg = err?.message || "No se pudo iniciar sesión";

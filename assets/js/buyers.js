@@ -10,7 +10,7 @@ function protectRoute() {
 
   if (!token || !user) {
     console.warn("No hay sesión activa. Redirigiendo a login...");
-    window.location.href = "/login";
+    window.location.href = "../login/login.html";
     return false;
   }
 
