@@ -1,5 +1,8 @@
-const API_BASE = "https://backend-rifa-mu.vercel.app"; //Api para desarrollo producción, cambiar a la URL del servidor real cuando se despliegue
-//const API_BASE = "http://localhost:3000"; //Api para desarrollo local
+//Api para desarrollo producción, cambiar a la URL del servidor real cuando se despliegue
+const API_BASE = "https://backend-rifa-mu.vercel.app";
+
+//Api para desarrollo local
+//const API_BASE = "http://localhost:3000";
 
 async function loginRequest(username, password) {
   const res = await fetch(`${API_BASE}/api/auth/login`, {
@@ -56,7 +59,7 @@ async function handleLoginSubmit(event) {
     }
     showFormMessage(form, "Inicio de sesión exitoso. Redirigiendo...", false);
     setTimeout(() => {
-      window.location.href = resp?.redirect || "../pages/buyers.html";
+      window.location.href = resp?.redirect || "/compradores";
     }, 700);
   } catch (err) {
     const msg = err?.message || "No se pudo iniciar sesión";

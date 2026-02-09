@@ -8,16 +8,7 @@
     <link rel="stylesheet" href="../assets/css/buyers.css" />
   </head>
   <body>
-    <nav class="navbar">
-      <div class="navbar-content">
-        <h1 class="navbar-title">🎰 Rifa Digital</h1>
-        <ul class="nav-links">
-          <li><a href="../index.html">Inicio</a></li>
-          <li><a href="./buyers.html" class="active">Compradores</a></li>
-          <li><a href="#" class="logout-btn">Cerrar Sesión</a></li>
-        </ul>
-      </div>
-    </nav>
+    <script src="../assets/js/navbar.js"></script>
 
     <div class="buyers-container">
       <div class="buyers-header">
@@ -63,6 +54,11 @@
           id="search-input"
           placeholder="Buscar por nombre, documento, correo o teléfono..."
         />
+        <select id="payment-filter">
+          <option value="todos">Todos</option>
+          <option value="pendiente">Pendientes por Pagar</option>
+          <option value="pagado">Pagados</option>
+        </select>
         <select id="sort-select">
           <option value="fecha-desc">Más recientes primero</option>
           <option value="fecha-asc">Más antiguos primero</option>
@@ -96,10 +92,6 @@
 
       <div class="pagination" id="pagination"></div>
     </div>
-
-    <!-- Navbar CSS -->
-    <style>
-          </style>
 
     <script src="../assets/js/buyers.js"></script>
   </body>

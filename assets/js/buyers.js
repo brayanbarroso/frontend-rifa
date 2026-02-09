@@ -1,5 +1,5 @@
 // Configuración de la API
-//const API_BASE = "http://localhost:3000"; //Api para desarrollo local
+//const API_BASE = "http://localhost:3000/api"; //Api para desarrollo local
 const API_BASE = "https://backend-rifa-mu.vercel.app/api"; //Api para desarrollo producción, cambiar a la URL del servidor real cuando se despliegue
 
 // ==================== PROTECCIÓN DE RUTA ====================
@@ -10,7 +10,7 @@ function protectRoute() {
 
   if (!token || !user) {
     console.warn("No hay sesión activa. Redirigiendo a login...");
-    window.location.href = "../login/login.html";
+    window.location.href = "/login";
     return false;
   }
 
@@ -29,6 +29,7 @@ let allBuyers = [];
 let filteredBuyers = [];
 let currentPage = 1;
 const itemsPerPage = 10;
+let paymentFilter = "todos"; // Filtro de estado de pago
 
 // ==================== INICIALIZACIÓN ====================
 document.addEventListener("DOMContentLoaded", () => {
@@ -60,6 +61,17 @@ function setupEventListeners() {
     renderTable();
   });
 
+  // Filtro de estado de pago
+  const paymentFilterSelect = document.getElementById("payment-filter");
+  if (paymentFilterSelect) {
+    paymentFilterSelect.addEventListener("change", (e) => {
+      paymentFilter = e.target.value;
+      currentPage = 1;
+      filterAndSortBuyers();
+      renderTable();
+    });
+  }
+
   // Ordenamiento
   const sortSelect = document.getElementById("sort-select");
   sortSelect.addEventListener("change", () => {
@@ -72,7 +84,9 @@ function setupEventListeners() {
   const clearBtn = document.getElementById("clear-filters-btn");
   clearBtn.addEventListener("click", () => {
     document.getElementById("search-input").value = "";
+    document.getElementById("payment-filter").value = "todos";
     document.getElementById("sort-select").value = "fecha-desc";
+    paymentFilter = "todos";
     currentPage = 1;
     filterAndSortBuyers();
     renderTable();
@@ -128,8 +142,13 @@ function filterAndSortBuyers() {
     .value.toLowerCase();
   const sortBy = document.getElementById("sort-select").value;
 
-  // Filtrar
+  // Filtrar por búsqueda y estado de pago
   filteredBuyers = allBuyers.filter((buyer) => {
+    // Filtrar por estado de pago
+    if (paymentFilter === "pendiente" && buyer.pagado) return false;
+    if (paymentFilter === "pagado" && !buyer.pagado) return false;
+
+    // Filtrar por búsqueda
     if (!searchTerm) return true;
 
     return (
@@ -418,7 +437,7 @@ function handleLogout() {
   if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
-    window.location.href = "../login/login.html";
+    window.location.href = "/login";
   }
 }
 

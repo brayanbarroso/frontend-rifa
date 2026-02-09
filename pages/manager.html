@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Panel de administración - Rifa</title>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          "Helvetica Neue",
+          Arial;
+        margin: 24px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e3e3e3;
+        padding: 18px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #2b6cb0;
+        background: #2b6cb0;
+        color: #fff;
+        cursor: pointer;
+      }
+      button.danger {
+        background: #c53030;
+        border-color: #9b2c2c;
+      }
+      #msg {
+        margin-top: 8px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+      }
+      th,
+      td {
+        padding: 8px;
+        border: 1px solid #e8e8e8;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Panel de administración</h1>
+
+    <section class="card">
+      <h2>Reiniciar rifa</h2>
+      <p>
+        Reinicia la rifa: esto típicamente eliminará asignaciones y restablecerá
+        el estado.
+      </p>
+      <div class="row">
+        <button id="restartBtn">Reiniciar rifa</button>
+        <button
+          id="reloadBtn"
+          style="background: #4a5568; border-color: #4a5568"
+        >
+          Recargar datos
+        </button>
+      </div>
+      <div id="msg" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2>Liberar número específico</h2>
+      <div class="row">
+        <input
+          id="releaseNumberInput"
+          type="text"
+          placeholder="Número a liberar"
+        />
+        <button id="releaseBtn">Liberar</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Eliminar comprador</h2>
+      <p>Proporcione el ID o correo del comprador para eliminarlo.</p>
+      <div class="row">
+        <input
+          id="deleteBuyerInput"
+          type="text"
+          placeholder="ID o email del comprador"
+        />
+        <button id="deleteBuyerBtn" class="danger">Eliminar</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Compradores</h2>
+      <p>Lista actual de compradores (última carga):</p>
+      <table id="buyersTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Números</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4">Sin datos cargados. Pulsa "Recargar datos".</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <script src="../assets/js/navbar.js"></script>
+    <script src="../js/manager.js"></script>
+  </body>
+</html>
