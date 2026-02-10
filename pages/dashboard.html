@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Rifa Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Navbar -->
+      <nav class="navbar">
+        <div class="navbar-brand">
+          <h2>🎉 Rifa Digital</h2>
+        </div>
+        <div class="navbar-menu">
+          <a href="../index.html" class="nav-link">Inicio</a>
+          <a href="dashboard.html" class="nav-link active">Dashboard</a>
+          <a href="buyers.html" class="nav-link">Compradores</a>
+          <a href="manager.html" class="nav-link">Administración</a>
+          <a
+            href="#"
+            class="nav-link"
+            onclick="
+              logout();
+              return false;
+            "
+            >Salir</a
+          >
+        </div>
+      </nav>
+
+      <!-- Header del Dashboard -->
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">📊 Dashboard de Ventas</h1>
+        <p class="dashboard-subtitle">Resumen general de la rifa</p>
+      </div>
+
+      <!-- Métricas Principales -->
+      <div class="metrics-grid">
+        <!-- Cantidad Total de Números -->
+        <div class="metric-card">
+          <div class="metric-icon">🎰</div>
+          <div class="metric-content">
+            <p class="metric-label">Cantidad de Números</p>
+            <p class="metric-value" id="totalNumbers">100</p>
+            <div class="metric-chart">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline
+                  points="0,20 10,18 20,22 30,15 40,18 50,12 60,16 70,10 80,14 90,8 100,12"
+                  fill="none"
+                  stroke="#06d6a0"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-trend success">📈 Activos</div>
+        </div>
+
+        <!-- Números Vendidos -->
+        <div class="metric-card">
+          <div class="metric-icon">✅</div>
+          <div class="metric-content">
+            <p class="metric-label">Números Vendidos</p>
+            <p class="metric-value" id="soldNumbers">0</p>
+            <div class="metric-chart">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline
+                  points="0,25 10,23 20,20 30,18 40,15 50,12 60,10 70,8 80,5 90,3 100,2"
+                  fill="none"
+                  stroke="#06d6a0"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-trend success">
+            📊 <span id="soldPercentage">0</span>%
+          </div>
+        </div>
+
+        <!-- Números Pagados -->
+        <div class="metric-card">
+          <div class="metric-icon">💳</div>
+          <div class="metric-content">
+            <p class="metric-label">Números Pagados</p>
+            <p class="metric-value" id="paidNumbers">0</p>
+            <div class="metric-chart">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline
+                  points="0,22 10,20 20,19 30,17 40,16 50,15 60,14 70,13 80,12 90,11 100,10"
+                  fill="none"
+                  stroke="#06d6a0"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-trend success">
+            💰 <span id="paidPercentage">0</span>%
+          </div>
+        </div>
+
+        <!-- Porcentaje de Ventas -->
+        <div class="metric-card">
+          <div class="metric-icon">📈</div>
+          <div class="metric-content">
+            <p class="metric-label">Porcentaje de Ventas</p>
+            <p class="metric-value percentage" id="salePercentage">0%</p>
+            <div class="metric-chart">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline
+                  points="0,28 10,26 20,24 30,20 40,18 50,15 60,12 70,8 80,5 90,3 100,2"
+                  fill="none"
+                  stroke="#06d6a0"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-trend success">📊 +2.5%</div>
+        </div>
+
+        <!-- Números Pendientes -->
+        <div class="metric-card warning">
+          <div class="metric-icon">⏳</div>
+          <div class="metric-content">
+            <p class="metric-label">Números Pendientes</p>
+            <p class="metric-value" id="pendingNumbers">0</p>
+            <div class="metric-chart">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline
+                  points="0,5 10,8 20,10 30,12 40,15 50,18 60,20 70,22 80,25 90,27 100,28"
+                  fill="none"
+                  stroke="#ffa500"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-trend warning">⏱️ En proceso</div>
+        </div>
+
+        <!-- Pendientes por Pagar -->
+        <div class="metric-card danger">
+          <div class="metric-icon">🔔</div>
+          <div class="metric-content">
+            <p class="metric-label">Pendientes por Pagar</p>
+            <p class="metric-value" id="unpaidPending">0</p>
+            <div class="metric-chart">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline
+                  points="0,10 10,12 20,14 30,16 40,18 50,20 60,22 70,24 80,26 90,27 100,28"
+                  fill="none"
+                  stroke="#ff6b6b"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-trend danger">
+            ❌ <span id="unpaidPercentage">0</span>%
+          </div>
+        </div>
+
+        <!-- Porcentaje de Pagados -->
+        <div class="metric-card">
+          <div class="metric-icon">✔️</div>
+          <div class="metric-content">
+            <p class="metric-label">Porcentaje de Pagados</p>
+            <p class="metric-value percentage" id="paidPercentageTotal">0%</p>
+            <div class="metric-chart">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline
+                  points="0,25 10,23 20,21 30,19 40,17 50,15 60,13 70,11 80,9 90,7 100,5"
+                  fill="none"
+                  stroke="#06d6a0"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-trend success">✅ +3.2%</div>
+        </div>
+
+        <!-- Porcentaje de Pendientes por Pagar -->
+        <div class="metric-card danger">
+          <div class="metric-icon">⚠️</div>
+          <div class="metric-content">
+            <p class="metric-label">Porcentaje Pendiente Pago</p>
+            <p class="metric-value percentage" id="unpaidPaidPercentage">0%</p>
+            <div class="metric-chart">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline
+                  points="0,5 10,7 20,9 30,11 40,13 50,15 60,17 70,19 80,21 90,23 100,25"
+                  fill="none"
+                  stroke="#ff6b6b"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-trend danger">⏰ -1.5%</div>
+        </div>
+      </div>
+
+      <!-- Tabla de Detalles -->
+      <div class="details-section">
+        <h2 class="section-title">📋 Detalle de Números</h2>
+        <div class="table-container">
+          <table class="details-table">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Cantidad</th>
+                <th>Porcentaje</th>
+                <th>Indicador</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-success">
+                <td><span class="badge badge-success">✅ Pagados</span></td>
+                <td id="tablePaidNumbers">0</td>
+                <td id="tablePaidPercentage">0%</td>
+                <td>
+                  <div class="progress-bar">
+                    <div class="progress-fill success" id="tablePaidFill"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="row-warning">
+                <td>
+                  <span class="badge badge-warning">⏳ Pendientes Pago</span>
+                </td>
+                <td id="tableUnpaidNumbers">0</td>
+                <td id="tableUnpaidPercentage">0%</td>
+                <td>
+                  <div class="progress-bar">
+                    <div
+                      class="progress-fill warning"
+                      id="tableUnpaidFill"
+                    ></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="row-secondary">
+                <td>
+                  <span class="badge badge-secondary">⬜ Disponibles</span>
+                </td>
+                <td id="tableAvailableNumbers">0</td>
+                <td id="tableAvailablePercentage">0%</td>
+                <td>
+                  <div class="progress-bar">
+                    <div
+                      class="progress-fill secondary"
+                      id="tableAvailableFill"
+                    ></div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/js/login.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+  </body>
+</html>

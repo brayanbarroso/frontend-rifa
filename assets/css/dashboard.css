@@ -1,0 +1,474 @@
+/* Dashboard Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 31, 58, 0.8),
+    rgba(16, 21, 50, 0.8)
+  );
+  border: 1px solid rgba(45, 55, 72, 0.5);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  animation: slideDown 0.6s ease-out;
+}
+
+.navbar-brand h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.1em;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text-main);
+  background: rgba(255, 107, 53, 0.15);
+  border: 1px solid var(--primary);
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.dashboard-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Metric Card */
+.metric-card {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 31, 58, 0.7),
+    rgba(16, 21, 50, 0.7)
+  );
+  border: 1px solid rgba(45, 55, 72, 0.6);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.metric-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.metric-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.metric-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.metric-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.metric-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.metric-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.metric-card:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.metric-card:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+.metric-card:hover {
+  border-color: rgba(255, 107, 53, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(32, 37, 64, 0.8),
+    rgba(22, 27, 56, 0.8)
+  );
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(255, 107, 53, 0.1);
+}
+
+.metric-card.warning {
+  border-color: rgba(255, 165, 0, 0.4);
+}
+
+.metric-card.warning:hover {
+  border-color: rgba(255, 165, 0, 0.6);
+  background: linear-gradient(
+    135deg,
+    rgba(40, 35, 20, 0.8),
+    rgba(30, 25, 10, 0.8)
+  );
+}
+
+.metric-card.danger {
+  border-color: rgba(255, 107, 107, 0.4);
+}
+
+.metric-card.danger:hover {
+  border-color: rgba(255, 107, 107, 0.6);
+  background: linear-gradient(
+    135deg,
+    rgba(40, 20, 20, 0.8),
+    rgba(30, 10, 10, 0.8)
+  );
+}
+
+/* Métric Icon */
+.metric-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Metric Content */
+.metric-content {
+  width: 100%;
+}
+
+.metric-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.metric-value.percentage {
+  font-size: 3rem;
+}
+
+/* Chart SVG */
+.metric-chart {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.metric-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Metric Trend */
+.metric-trend {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.metric-trend.success {
+  border-color: rgba(6, 214, 160, 0.3);
+  color: #06d6a0;
+}
+
+.metric-trend.warning {
+  border-color: rgba(255, 165, 0, 0.3);
+  color: #ffa500;
+}
+
+.metric-trend.danger {
+  border-color: rgba(255, 107, 107, 0.3);
+  color: #ff6b6b;
+}
+
+/* Details Section */
+.details-section {
+  animation: fadeInUp 0.8s ease-out 0.9s both;
+}
+
+.section-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+}
+
+/* Table Container */
+.table-container {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 31, 58, 0.7),
+    rgba(16, 21, 50, 0.7)
+  );
+  border: 1px solid rgba(45, 55, 72, 0.6);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  padding: 0;
+}
+
+/* Table Styles */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table thead {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 53, 0.1),
+    rgba(247, 184, 1, 0.1)
+  );
+  border-bottom: 2px solid rgba(255, 107, 53, 0.3);
+}
+
+.details-table th {
+  padding: 1.5rem 2rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+}
+
+.details-table tbody tr {
+  border-bottom: 1px solid rgba(45, 55, 72, 0.3);
+  transition: all 0.3s ease;
+}
+
+.details-table tbody tr:hover {
+  background: rgba(255, 107, 53, 0.05);
+}
+
+.details-table td {
+  padding: 1.5rem 2rem;
+  color: var(--text-main);
+}
+
+/* Badge Styles */
+.badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.badge-success {
+  background: rgba(6, 214, 160, 0.15);
+  border: 1px solid rgba(6, 214, 160, 0.4);
+  color: #06d6a0;
+}
+
+.badge-warning {
+  background: rgba(255, 165, 0, 0.15);
+  border: 1px solid rgba(255, 165, 0, 0.4);
+  color: #ffa500;
+}
+
+.badge-secondary {
+  background: rgba(0, 78, 137, 0.15);
+  border: 1px solid rgba(0, 78, 137, 0.4);
+  color: #87ceeb;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(45, 55, 72, 0.5);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.progress-fill.success {
+  background: linear-gradient(90deg, #06d6a0, #00c896);
+}
+
+.progress-fill.warning {
+  background: linear-gradient(90deg, #ffa500, #ff8c00);
+}
+
+.progress-fill.secondary {
+  background: linear-gradient(90deg, #004e89, #0066b3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .metrics-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .metric-card {
+    padding: 1.5rem;
+  }
+
+  .dashboard-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .navbar-menu {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .metric-card {
+    padding: 1.25rem;
+  }
+
+  .metric-value {
+    font-size: 2rem;
+  }
+
+  .metric-icon {
+    font-size: 2rem;
+  }
+
+  .dashboard-title {
+    font-size: 2rem;
+  }
+
+  .details-table th,
+  .details-table td {
+    padding: 1rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .navbar {
+    padding: 1rem;
+  }
+
+  .navbar-brand h2 {
+    font-size: 1.4rem;
+  }
+
+  .navbar-menu {
+    width: 100%;
+    justify-content: space-around;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .metric-card {
+    padding: 1rem;
+  }
+
+  .metric-value {
+    font-size: 1.8rem;
+  }
+
+  .metric-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+  }
+}
