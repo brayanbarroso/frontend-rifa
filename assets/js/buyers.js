@@ -437,7 +437,7 @@ function handleLogout() {
   if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
-    window.location.href = "/login";
+    window.location.href = "../login/login.html";
   }
 }
 
