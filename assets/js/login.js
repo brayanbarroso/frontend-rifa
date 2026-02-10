@@ -59,7 +59,7 @@ async function handleLoginSubmit(event) {
     }
     showFormMessage(form, "Inicio de sesión exitoso. Redirigiendo...", false);
     setTimeout(() => {
-      window.location.href = resp?.redirect || "../pages/buyers.html";
+      window.location.href = resp?.redirect || "../pages/dashboard.html";
     }, 700);
   } catch (err) {
     const msg = err?.message || "No se pudo iniciar sesión";
@@ -95,9 +95,41 @@ function isAuthenticated() {
   return !!getAuthToken();
 }
 
+// Función para cerrar sesión
+function logout() {
+  console.log("🚪 Cerrando sesión...");
+
+  // Limpiar todos los datos de autenticación
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("authUser");
+
+  // Limpiar cualquier dato del dashboard
+  localStorage.removeItem("dashboardData");
+
+  // Limpiar sessionStorage también (por si hay datos ahí)
+  sessionStorage.clear();
+
+  console.log("✅ Datos de sesión borrados");
+
+  // Redirigir al login
+  window.location.href = "../login/login.html";
+}
+
+// Agregar evento a los botones de logout
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".login-form");
   if (form) form.addEventListener("submit", handleLoginSubmit);
+
+  // Encontrar todos los botones/enlaces de logout y agregar el evento
+  const logoutLinks = document.querySelectorAll(
+    'a[href*="login"][data-logout="true"], .logout-btn, [onclick*="logout"]',
+  );
+  logoutLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      logout();
+    });
+  });
 });
 
 window.loginModule = {
@@ -106,4 +138,5 @@ window.loginModule = {
   getAuthToken,
   authenticatedFetch,
   isAuthenticated,
+  logout,
 };

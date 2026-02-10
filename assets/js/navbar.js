@@ -7,6 +7,7 @@ function loadNavbar() {
         </div>
         <ul class="nav-links">
           <li><a href="/" class="nav-link" data-page="inicio">Inicio</a></li>
+          <li><a href="/pages/dashboard.html" class="nav-link" data-page="dashboard">Dashboard</a></li>
           <li><a href="/pages/buyers.html" class="nav-link" data-page="buyers">Compradores</a></li>
           <li><a href="/pages/manager.html" class="nav-link" data-page="manager">Administración</a></li>
           <li class="nav-user">
@@ -87,8 +88,24 @@ function handleLogout(e) {
   e.preventDefault();
 
   if (confirm("¿Deseas cerrar sesión?")) {
+    console.log("🚪 Cerrando sesión...");
+
+    // Limpiar TODOS los datos de autenticación y sesión
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
+    localStorage.removeItem("dashboardData");
+
+    // Limpiar sessionStorage también
+    sessionStorage.clear();
+
+    console.log("✅ Datos de sesión borrados completamente");
+    console.log("Detalles borrados:");
+    console.log("  - authToken");
+    console.log("  - authUser");
+    console.log("  - dashboardData");
+    console.log("  - sessionStorage entero");
+
+    // Redirigir al login
     window.location.href = "../login/login.html";
   }
 }
