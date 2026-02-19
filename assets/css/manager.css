@@ -7,6 +7,7 @@ body {
     "Helvetica Neue",
     Arial;
 }
+
 .card {
   background: #fff;
   border: 1px solid #e3e3e3;
@@ -14,16 +15,32 @@ body {
   border-radius: 8px;
   margin-bottom: 16px;
 }
+
+.card h2,
+p {
+  color: #000;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
 .row {
   display: flex;
   gap: 8px;
   align-items: center;
 }
+
 input[type="text"] {
+  color: #000;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+input[type="number"],
+input[type="date"] {
+  color: #000;
+}
+
 button {
   padding: 8px 12px;
   border-radius: 6px;
@@ -32,21 +49,148 @@ button {
   color: #fff;
   cursor: pointer;
 }
-button.danger {
-  background: #c53030;
-  border-color: #9b2c2c;
+
+button:hover {
+  background: #224a8e;
+  border-color: #1e3a6b;
 }
+
+button.reload {
+  background: #4a5568;
+  border-color: #2d5db1;
+}
+
+button.reload:hover {
+  background: #2d5db1;
+  border-color: #1e3a6b;
+}
+
+button.danger {
+  background: #dc3545;
+  border-color: #dc3545;
+}
+
+button.danger:hover {
+  background: #c82333;
+  border-color: #bd2130;
+  font-weight: bold;
+}
+
 #msg {
   margin-top: 8px;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 12px;
 }
+
 th,
 td {
+  color: #000;
   padding: 8px;
   border: 1px solid #e8e8e8;
   text-align: left;
+}
+
+/* Estilos para el formulario de configuración de la rifa */
+.card-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  color: #000;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2b6cb0;
+  box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+#saveRaffleConfigBtn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid #2b6cb0;
+  background: #2b6cb0;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
+}
+
+#saveRaffleConfigBtn:hover {
+  background-color: #224a8e;
+}
+
+#saveRaffleConfigBtn:active {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-message {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 4px;
+  display: none;
+}
+
+.form-message.show {
+  display: block;
+}
+
+.form-message.success {
+  background-color: #c6f6d5;
+  color: #22543d;
+}
+
+.form-message.error {
+  background-color: #fed7d7;
+  color: #742a2a;
+}
+
+/* Responsive: En pantallas pequeñas, los campos ocupa una columna */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }

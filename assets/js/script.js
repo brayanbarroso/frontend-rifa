@@ -1,8 +1,8 @@
 // Configuración de la API
-//const API_URL = "http://localhost:3000/api";
+const API_URL = "http://localhost:3000/api";
 
 //Api en producción, cambiar a la URL del servidor real cuando se despliegue
-const API_URL = "https://backend-rifa-mu.vercel.app/api";
+//const API_URL = "https://backend-rifa-mu.vercel.app/api";
 
 // Estado global
 let numbers = [];
@@ -12,6 +12,7 @@ let selectedNumberId = null;
 document.addEventListener("DOMContentLoaded", () => {
   loadNumbers();
   setupEventListeners();
+  applyRaffleConfig();
 });
 
 // Configurar event listeners
@@ -252,3 +253,93 @@ document.addEventListener("keydown", (e) => {
     closeModal();
   }
 });
+
+// ==================== CONFIGURACIÓN DE TEXTOS DE LA RIFA ====================
+
+function applyRaffleConfig() {
+  // Primero intentar cargar desde la API
+  loadRaffleConfigFromAPI();
+}
+
+async function loadRaffleConfigFromAPI() {
+  try {
+    const response = await fetch(`${API_URL}/config`);
+
+    if (!response.ok) {
+      // Si falla, intentar desde localStorage
+      applyRaffleConfigFromStorage();
+      return;
+    }
+
+    const result = await response.json();
+    const config = result.data || result;
+
+    console.log("Configuración de la rifa cargada desde API:", config);
+
+    // Construir los textos descriptivos
+    const dateText = `📅 Juega: ${formatDate(config.fecha_rifa)} 🎰 con las Dos (2) últimas cifras de ${config.loteria || "Sinuano Noche"}`;
+    const pricePrizeText = `💰 Valor de la rifa: $${formatNumber(config.valor_rifa)} 🏆 Premio: $${formatNumber(config.premio)} en efectivo`;
+    const paymentText = `📲 Medios de pago: ${config.medio_pago || "Nequi o Llave"} 📞 <strong>3117330066</strong>`;
+
+    const dateEl = document.getElementById("raffle-date");
+    const pricePrizeEl = document.getElementById("raffle-price-prize");
+    const paymentEl = document.getElementById("raffle-payment-methods");
+
+    if (dateEl) dateEl.innerHTML = dateText;
+    if (pricePrizeEl) pricePrizeEl.innerHTML = pricePrizeText;
+    if (paymentEl) paymentEl.innerHTML = paymentText;
+
+    // Guardar en localStorage también para referencia
+    localStorage.setItem(
+      "raffleConfig",
+      JSON.stringify({
+        fecha_rifa: config.fecha_rifa,
+        loteria: config.loteria,
+        valor_rifa: config.valor_rifa,
+        premio: config.premio,
+        medio_pago: config.medio_pago,
+      }),
+    );
+  } catch (error) {
+    console.error("Error al cargar configuración desde API:", error);
+    // Fallback a localStorage
+    applyRaffleConfigFromStorage();
+  }
+}
+
+function applyRaffleConfigFromStorage() {
+  try {
+    const raw = localStorage.getItem("raffleConfig");
+    if (!raw) return;
+
+    const config = JSON.parse(raw);
+
+    const dateEl = document.getElementById("raffle-date");
+    const pricePrizeEl = document.getElementById("raffle-price-prize");
+    const paymentEl = document.getElementById("raffle-payment-methods");
+
+    // Construir los textos descriptivos desde la configuración
+    const dateText = `📅 Juega: ${formatDate(config.fecha_rifa)} 🎰 con las Dos (2) últimas cifras de ${config.loteria || "Sinuano Noche"}`;
+    const pricePrizeText = `💰 Valor de la rifa: $${formatNumber(config.valor_rifa)} 🏆 Premio: $${formatNumber(config.premio)} en efectivo`;
+    const paymentText = `📲 Medios de pago: ${config.medio_pago || "Nequi o Llave"} 📞 <strong>3117330066</strong>`;
+
+    if (dateEl) dateEl.innerHTML = dateText;
+    if (pricePrizeEl) pricePrizeEl.innerHTML = pricePrizeText;
+    if (paymentEl) paymentEl.innerHTML = paymentText;
+  } catch (error) {
+    console.error("Error al aplicar configuración de la rifa:", error);
+  }
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return "27 de febrero";
+  const date = new Date(dateStr);
+  const options = { month: "long", day: "numeric" };
+  const formatted = date.toLocaleDateString("es-ES", options);
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
+
+function formatNumber(num) {
+  if (!num) return "0";
+  return Math.floor(num).toLocaleString("es-ES");
+}

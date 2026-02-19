@@ -1,8 +1,8 @@
 //Api para desarrollo local, cambiar a la URL del servidor real cuando se despliegue
-//const API_BASE = "http://localhost:3000";
+const API_BASE = "http://localhost:3000";
 
 //Api en producción, cambiar a la URL del servidor real cuando se despliegue
-const API_BASE = "https://backend-rifa-mu.vercel.app";
+//const API_BASE = "https://backend-rifa-mu.vercel.app";
 
 function showMessage(text, isError = false) {
   const el = document.getElementById("msg");
@@ -43,10 +43,49 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteBuyerBtn = document.getElementById("deleteBuyerBtn");
   const reloadBtn = document.getElementById("reloadBtn");
 
+  // Nuevos campos individuales del formulario
+  const raffleDate = document.getElementById("raffleDate");
+  const raffleLottery = document.getElementById("raffleLottery");
+  const raffleValue = document.getElementById("raffleValue");
+  const rafflePrize = document.getElementById("rafflePrize");
+  const rafflePayment = document.getElementById("rafflePayment");
+  const raffleResponsible = document.getElementById("raffleResponsible");
+  const saveRaffleConfigBtn = document.getElementById("saveRaffleConfigBtn");
+
   restartBtn?.addEventListener("click", restartRaffle);
   releaseBtn?.addEventListener("click", releaseNumber);
   deleteBuyerBtn?.addEventListener("click", deleteBuyer);
   reloadBtn?.addEventListener("click", loadData);
+
+  if (
+    raffleDate &&
+    raffleLottery &&
+    raffleValue &&
+    rafflePrize &&
+    rafflePayment &&
+    raffleResponsible &&
+    saveRaffleConfigBtn
+  ) {
+    loadRaffleConfigFromAPI(
+      raffleDate,
+      raffleLottery,
+      raffleValue,
+      rafflePrize,
+      rafflePayment,
+      raffleResponsible,
+    );
+
+    saveRaffleConfigBtn.addEventListener("click", () => {
+      saveRaffleConfigToAPI(
+        raffleDate.value,
+        raffleLottery.value,
+        raffleValue.value,
+        rafflePrize.value,
+        rafflePayment.value,
+        raffleResponsible.value,
+      );
+    });
+  }
 
   loadData();
 });
@@ -244,4 +283,221 @@ function escapeHtml(str) {
         c
       ],
   );
+}
+
+// ==================== CONFIGURACIÓN DE TEXTOS DE LA RIFA ====================
+
+async function loadRaffleConfigFromAPI(
+  dateInput,
+  lotteryInput,
+  valueInput,
+  prizeInput,
+  paymentInput,
+  responsibleInput,
+) {
+  try {
+    const res = await authenticatedFetch("/api/config");
+
+    if (!res.ok) {
+      console.error("Error al cargar configuración de la API");
+      return;
+    }
+
+    const data = await res.json();
+    const config = data.data || data;
+
+    // Llenar los campos individuales con los datos de la API
+    dateInput.value =
+      config.fecha_rifa || new Date().toISOString().split("T")[0];
+    lotteryInput.value = config.loteria || "Sinuano Noche";
+    valueInput.value = config.valor_rifa || "15000";
+    prizeInput.value = config.premio || "500000";
+    paymentInput.value = config.medio_pago || "Nequi o Llave";
+    responsibleInput.value = config.responsable || "Responsable";
+
+    // Guardar en localStorage también para referencia
+    const raffleConfig = {
+      fecha_rifa: config.fecha_rifa,
+      loteria: config.loteria,
+      valor_rifa: config.valor_rifa,
+      premio: config.premio,
+      medio_pago: config.medio_pago,
+      responsable: config.responsable,
+    };
+    localStorage.setItem("raffleConfig", JSON.stringify(raffleConfig));
+  } catch (err) {
+    console.error("Error al cargar configuración de la rifa:", err);
+    // Intentar cargar del localStorage como fallback
+    loadRaffleConfigFromLocalStorage(
+      dateInput,
+      lotteryInput,
+      valueInput,
+      prizeInput,
+      paymentInput,
+      responsibleInput,
+    );
+  }
+}
+
+function loadRaffleConfigFromLocalStorage(
+  dateInput,
+  lotteryInput,
+  valueInput,
+  prizeInput,
+  paymentInput,
+  responsibleInput,
+) {
+  try {
+    const raw = localStorage.getItem("raffleConfig");
+    if (!raw) return;
+
+    const config = JSON.parse(raw);
+
+    // Llenar los campos individuales con los datos del localStorage
+    dateInput.value =
+      config.fecha_rifa || new Date().toISOString().split("T")[0];
+    lotteryInput.value = config.loteria || "Sinuano Noche";
+    valueInput.value = config.valor_rifa || "15000";
+    prizeInput.value = config.premio || "500000";
+    paymentInput.value = config.medio_pago || "Nequi o Llave";
+    responsibleInput.value = config.responsable || "Responsable";
+  } catch (err) {
+    console.error("Error al cargar configuración del localStorage:", err);
+  }
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return "27 de febrero";
+  const date = new Date(dateStr);
+  const options = { month: "long", day: "numeric" };
+  const formatted = date.toLocaleDateString("es-ES", options);
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
+
+function formatNumber(num) {
+  if (!num) return "0";
+  return Math.floor(num).toLocaleString("es-ES");
+}
+
+// Función auxiliar para parsear valores del formulario
+function parseRaffleFormData(dateText, pricePrizeText, paymentText) {
+  try {
+    // Parsear fecha - del formato "📅 Juega: 27 de febrero ..."
+    const existingConfig = JSON.parse(
+      localStorage.getItem("raffleConfig") || "{}",
+    );
+
+    // Parsear lotería - del formato "... con las Dos (2) últimas cifras de [LOTERÍA]"
+    let loteria = "Lotería Nacional";
+    const lotteryMatch = paymentText.match(/cifras\s+de\s+(.+?)(?:\s+$|$)/i);
+    if (lotteryMatch) {
+      loteria = lotteryMatch[1].trim();
+    } else if (dateText) {
+      const dateMatch = dateText.match(/cifras\s+de\s+(.+?)(?:\s*$|$)/);
+      if (dateMatch) {
+        loteria = dateMatch[1].trim();
+      }
+    }
+
+    // Parsear valor y premio - del formato "... $15.000 ... $500.000 ..."
+    let valor_rifa = 0;
+    let premio = 0;
+
+    const numbers = pricePrizeText.match(
+      /\$[\s]?(\d+(?:[.,]\d{3})*(?:[.,]\d{2})?)/g,
+    );
+    if (numbers && numbers.length >= 2) {
+      valor_rifa = parseFloat(
+        numbers[0].replace(/[$\s.,]/g, (m) => (m === "." ? "." : "")),
+      );
+      premio = parseFloat(
+        numbers[1].replace(/[$\s.,]/g, (m) => (m === "." ? "." : "")),
+      );
+    }
+
+    // Parsear medio de pago - del formato "📲 Medios de pago: [PAGO]"
+    let medio_pago = "Nequi o Llave";
+    const paymentMatch = paymentText.match(/pago:\s+(.+?)(?:\s+📞|$)/i);
+    if (paymentMatch) {
+      medio_pago = paymentMatch[1].trim();
+    }
+
+    return {
+      fecha_rifa:
+        existingConfig.fecha_rifa || new Date().toISOString().split("T")[0],
+      loteria: loteria,
+      valor_rifa: valor_rifa,
+      premio: premio,
+      medio_pago: medio_pago,
+      responsable: existingConfig.responsable || "Responsable",
+    };
+  } catch (err) {
+    console.error("Error al parsear datos del formulario:", err);
+    return {
+      fecha_rifa: new Date().toISOString().split("T")[0],
+      loteria: "Lotería Nacional",
+      valor_rifa: 15000,
+      premio: 500000,
+      medio_pago: "Nequi o Llave",
+      responsable: "Responsable",
+    };
+  }
+}
+
+async function saveRaffleConfigToAPI(
+  dateValue,
+  lotteryValue,
+  valueValue,
+  prizeValue,
+  paymentValue,
+  responsibleValue,
+) {
+  try {
+    // Construir el objeto de configuración desde los campos individuales
+    const configData = {
+      fecha_rifa: dateValue,
+      loteria: lotteryValue,
+      valor_rifa: parseInt(valueValue, 10),
+      premio: parseInt(prizeValue, 10),
+      medio_pago: paymentValue,
+      responsable: responsibleValue,
+    };
+
+    const res = await authenticatedFetch("/api/config", {
+      method: "PUT",
+      body: JSON.stringify(configData),
+    });
+
+    if (!res.ok) {
+      const error = await res.text();
+      showMessage("Error al guardar: " + error, true);
+      return;
+    }
+
+    const result = await res.json();
+
+    // Guardar en localStorage también
+    localStorage.setItem("raffleConfig", JSON.stringify(configData));
+
+    // Mostrar mensaje de éxito
+    const configMsg = document.getElementById("configMsg");
+    if (configMsg) {
+      configMsg.textContent =
+        "✓ Configuración de la rifa actualizada correctamente.";
+      configMsg.classList.add("show", "success");
+      configMsg.classList.remove("error");
+      setTimeout(() => {
+        configMsg.classList.remove("show");
+      }, 3000);
+    }
+  } catch (err) {
+    console.error("Error al guardar configuración:", err);
+    const configMsg = document.getElementById("configMsg");
+    if (configMsg) {
+      configMsg.textContent =
+        "Error al guardar la configuración: " + err.message;
+      configMsg.classList.add("show", "error");
+      configMsg.classList.remove("success");
+    }
+  }
 }

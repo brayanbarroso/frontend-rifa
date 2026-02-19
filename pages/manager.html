@@ -13,66 +13,145 @@
     <h1>Panel de administración</h1>
 
     <section class="card">
-      <h2>Reiniciar rifa</h2>
-      <p>
-        Reinicia la rifa: esto típicamente eliminará asignaciones y restablecerá
-        el estado.
-      </p>
-      <div class="row">
-        <button id="restartBtn">Reiniciar rifa</button>
-        <button
-          id="reloadBtn"
-          style="background: #4a5568; border-color: #4a5568"
-        >
-          Recargar datos
-        </button>
-      </div>
-      <div id="msg" aria-live="polite"></div>
-    </section>
-
-    <section class="card">
-      <h2>Liberar número específico</h2>
-      <div class="row">
-        <input
-          id="releaseNumberInput"
-          type="text"
-          placeholder="Número a liberar"
-        />
-        <button id="releaseBtn">Liberar</button>
+      <div class="card-container">
+        <h2>Reiniciar rifa</h2>
+        <p>
+          Reinicia la rifa: esto típicamente eliminará asignaciones y
+          restablecerá el estado.
+        </p>
+        <div class="row">
+          <button id="restartBtn">Reiniciar rifa</button>
+          <button id="reloadBtn" class="reload">Recargar datos</button>
+        </div>
+        <div id="msg" aria-live="polite"></div>
       </div>
     </section>
 
     <section class="card">
-      <h2>Eliminar comprador</h2>
-      <p>Proporcione el ID o correo del comprador para eliminarlo.</p>
-      <div class="row">
-        <input
-          id="deleteBuyerInput"
-          type="text"
-          placeholder="ID o email del comprador"
-        />
-        <button id="deleteBuyerBtn" class="danger">Eliminar</button>
+      <div class="card-container">
+        <h2>Liberar número específico</h2>
+        <div class="row">
+          <input
+            id="releaseNumberInput"
+            type="text"
+            placeholder="Número a liberar"
+          />
+          <button id="releaseBtn">Liberar</button>
+        </div>
       </div>
     </section>
 
     <section class="card">
-      <h2>Compradores</h2>
-      <p>Lista actual de compradores (última carga):</p>
-      <table id="buyersTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Números</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="4">Sin datos cargados. Pulsa "Recargar datos".</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="card-container">
+        <h2>Eliminar comprador</h2>
+        <p>Proporcione el ID o correo del comprador para eliminarlo.</p>
+        <div class="row">
+          <input
+            id="deleteBuyerInput"
+            type="text"
+            placeholder="ID o email del comprador"
+          />
+          <button id="deleteBuyerBtn" class="danger">Eliminar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-container">
+        <h2>Configuración de textos de la rifa</h2>
+        <p>Personaliza los textos que se muestran en la página principal.</p>
+        <form id="raffleConfigForm" class="config-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="raffleDate">Fecha de la rifa</label>
+              <input id="raffleDate" type="date" required />
+            </div>
+            <div class="form-group">
+              <label for="raffleLottery">Lotería</label>
+              <input
+                id="raffleLottery"
+                type="text"
+                placeholder="Ej: Sinuano Noche"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="raffleValue">Valor de la rifa ($)</label>
+              <input
+                id="raffleValue"
+                type="number"
+                placeholder="15000"
+                min="0"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="rafflePrize">Premio ($)</label>
+              <input
+                id="rafflePrize"
+                type="number"
+                placeholder="500000"
+                min="0"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="rafflePayment">Medio de pago</label>
+              <input
+                id="rafflePayment"
+                type="text"
+                placeholder="Ej: Nequi o Llave"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="raffleResponsible">Responsable</label>
+              <input
+                id="raffleResponsible"
+                type="text"
+                placeholder="Nombre del responsable"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button id="saveRaffleConfigBtn" type="button">
+              Guardar configuración
+            </button>
+          </div>
+        </form>
+        <div id="configMsg" aria-live="polite" class="form-message"></div>
+      </div>
+    </section>
+
+    <!-- seccion para mostrar los compradores actuales -->
+    <section class="card">
+      <div class="card-container">
+        <h2>Compradores</h2>
+        <p>Lista actual de compradores (última carga):</p>
+        <table id="buyersTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Números</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="4">Sin datos cargados. Pulsa "Recargar datos".</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <script src="../assets/js/manager.js"></script>
