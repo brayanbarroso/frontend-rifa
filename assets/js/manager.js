@@ -1,8 +1,8 @@
 //Api para desarrollo local, cambiar a la URL del servidor real cuando se despliegue
-const API_BASE = "http://localhost:3000";
+//const API_BASE = "http://localhost:3000";
 
 //Api en producción, cambiar a la URL del servidor real cuando se despliegue
-//const API_BASE = "https://backend-rifa-mu.vercel.app";
+const API_BASE = "https://backend-rifa-mu.vercel.app";
 
 function showMessage(text, isError = false) {
   const el = document.getElementById("msg");

@@ -2,10 +2,10 @@
 const TOTAL_NUMBERS = 100;
 
 //Api en local, cambiar a la URL del servidor real cuando se despliegue
-const API_BASE_URL = "http://localhost:3000/api";
+//const API_BASE_URL = "http://localhost:3000/api";
 
 // Api en producción, cambiar a la URL del servidor real cuando se despliegue
-//const API_BASE_URL = "https://backend-rifa-mu.vercel.app/api";
+const API_BASE_URL = "https://backend-rifa-mu.vercel.app/api";
 
 function getAuthToken() {
   return localStorage.getItem("authToken");
